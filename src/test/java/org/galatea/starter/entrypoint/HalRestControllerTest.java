@@ -43,7 +43,7 @@ public class HalRestControllerTest extends ASpringTest {
     given(this.mockHalService.processText(paramVal)).willReturn(result);
 
     this.mvc.perform(
-        get("/hal").param(param, paramVal).accept(MediaType.APPLICATION_JSON_VALUE))
+            get("/hal").param(param, paramVal).accept(MediaType.APPLICATION_JSON_VALUE))
         .andExpect(jsonPath("$", is(result)));
   }
 

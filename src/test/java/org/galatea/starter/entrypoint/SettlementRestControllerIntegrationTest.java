@@ -42,29 +42,6 @@ public class SettlementRestControllerIntegrationTest {
   @Value("${fuse-host.url}")
   private String FuseHostName;
 
-  interface FuseServer {
-
-    @RequestLine("POST /settlementEngine")
-    @Headers("Content-Type: application/json")
-    SettlementResponseMessage sendTradeAgreementJson(TradeAgreementMessages tradeAgreements);
-
-    @RequestLine("GET /settlementEngine/mission/{id}")
-    SettlementMissionMessage getSettlementMissionJson(@Param("id") Long id);
-
-    @RequestLine("GET /settlementEngine/missions?ids={ids}")
-    SettlementMissionList getSettlementMissionsJson(@Param("ids") String ids);
-
-    @RequestLine("POST /settlementEngine")
-    @Headers({"Content-Type: application/x-protobuf", "Accept: application/x-protobuf"})
-    SettlementResponseProtoMessage sendTradeAgreementProto(
-        TradeAgreementProtoMessages tradeAgreements);
-
-    @RequestLine("GET /settlementEngine/mission/{id}")
-    @Headers({"Accept: application/x-protobuf"})
-    SettlementMissionProtoMessage getSettlementMissionProto(@Param("id") Long id);
-
-  }
-
   @Test
   public void testMissionCreationProto() {
     String fuseHostName = System.getProperty("fuse.sandbox.url");
@@ -181,5 +158,28 @@ public class SettlementRestControllerIntegrationTest {
         settlementMissions.getSettlementMissions().get(0).getId().toString());
     assertEquals(missionIds.get(1),
         settlementMissions.getSettlementMissions().get(1).getId().toString());
+  }
+
+  interface FuseServer {
+
+    @RequestLine("POST /settlementEngine")
+    @Headers("Content-Type: application/json")
+    SettlementResponseMessage sendTradeAgreementJson(TradeAgreementMessages tradeAgreements);
+
+    @RequestLine("GET /settlementEngine/mission/{id}")
+    SettlementMissionMessage getSettlementMissionJson(@Param("id") Long id);
+
+    @RequestLine("GET /settlementEngine/missions?ids={ids}")
+    SettlementMissionList getSettlementMissionsJson(@Param("ids") String ids);
+
+    @RequestLine("POST /settlementEngine")
+    @Headers({"Content-Type: application/x-protobuf", "Accept: application/x-protobuf"})
+    SettlementResponseProtoMessage sendTradeAgreementProto(
+        TradeAgreementProtoMessages tradeAgreements);
+
+    @RequestLine("GET /settlementEngine/mission/{id}")
+    @Headers({"Accept: application/x-protobuf"})
+    SettlementMissionProtoMessage getSettlementMissionProto(@Param("id") Long id);
+
   }
 }

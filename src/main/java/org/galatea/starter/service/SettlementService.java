@@ -114,8 +114,7 @@ public class SettlementService {
   }
 
   /**
-   * Delete the mission by ID.
-   * This removes the mission from the cache as well.
+   * Delete the mission by ID. This removes the mission from the cache as well.
    *
    * @param id identifier of the mission to delete
    */

@@ -7,6 +7,7 @@ import lombok.Data;
 @Data
 @Builder
 public class IexLastTradedPrice {
+
   private String symbol;
   private BigDecimal price;
   private Integer size;

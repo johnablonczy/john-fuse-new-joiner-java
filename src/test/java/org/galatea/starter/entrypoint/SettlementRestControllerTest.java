@@ -74,43 +74,30 @@ import org.springframework.web.accept.ParameterContentNegotiationStrategy;
 public class SettlementRestControllerTest
     extends ASpringTest {
 
+  private static final Long MISSION_ID_1 = 1091L;
   @Value("${mvc.settleMissionPath}")
   private String settleMissionPath;
-
   @Value("${mvc.getMissionPath}")
   private String getMissionPath;
-
   @Value("${mvc.getMissionsPath}")
   private String getMissionsPath;
-
   @Value("${mvc.deleteMissionPath}")
   private String deleteMissionPath;
-
   @Value("${mvc.updateMissionPath}")
   private String updateMissionPath;
-
   @Autowired
   private ITranslator<TradeAgreementMessages, List<TradeAgreement>> tradeAgreementTranslator;
-
   @Autowired
   private ITranslator<SettlementMission, SettlementMissionMessage> settlementMissionTranslator;
-
   @Autowired
   private ITranslator<SettlementMissionMessage, SettlementMission> settlementMissionMsgTranslator;
-
   @MockBean
   private SettlementService mockSettlementService;
-
   @Autowired
   private SettlementRestController settlementRestController;
-
   private ObjectMapper objectMapper;
-
   private JacksonTester<TradeAgreementMessages> agreementJsonTester;
-
   private JacksonTester<List<Long>> missionIdJsonTester;
-
-  private static final Long MISSION_ID_1 = 1091L;
 
   @Before
   public void setup() {
@@ -182,8 +169,8 @@ public class SettlementRestControllerTest
   @Test
   public void testSettleAgreement_XML() throws Exception {
     TradeAgreementMessages messages = TradeAgreementMessages.builder().agreement(
-        TradeAgreementMessage.builder().instrument("IBM").internalParty("INT-1")
-            .externalParty("EXT-1").buySell("B").qty(100d).build())
+            TradeAgreementMessage.builder().instrument("IBM").internalParty("INT-1")
+                .externalParty("EXT-1").buySell("B").qty(100d).build())
         .build();
 
     JAXBContext context = JAXBContext.newInstance(TradeAgreementMessages.class);
@@ -375,18 +362,17 @@ public class SettlementRestControllerTest
 
     byte[] expectedXlsx = readBytes("SettlementMissions.xlsx");
 
-
     MockMvcResponse response =
-    given()
-        .log().ifValidationFails()
-        .when()
-        .get("/settlementEngine/missions?ids=1,2&format=xlsx&requestId=1234")
-        .then()
-        .log().ifValidationFails()
-        .statusCode(HttpStatus.OK.value())
-        .contentType("application/vnd.ms-excel")
-        .extract()
-        .response();
+        given()
+            .log().ifValidationFails()
+            .when()
+            .get("/settlementEngine/missions?ids=1,2&format=xlsx&requestId=1234")
+            .then()
+            .log().ifValidationFails()
+            .statusCode(HttpStatus.OK.value())
+            .contentType("application/vnd.ms-excel")
+            .extract()
+            .response();
 
     // Directly comparing the spreadsheet bytes fails even when the expected spreadsheet appears to
     // be an exact copy of the actual result, so instead compare the spreadsheet contents logically

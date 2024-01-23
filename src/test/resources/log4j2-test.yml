@@ -4,12 +4,12 @@
 # Can specify using this configuration along with log4j2.yml via: -Dlog4j.configurationFile=log4j2.yml,log4j2-test.yml
 
 Configuration:
-  name: Default  
+  name: Default
   # "status: trace" to print out logging configuration debug messages
   # status: trace
   
   Appenders:
-  
+
     Console:
       name: Console
       target: SYSTEM_OUT
@@ -20,18 +20,18 @@ Configuration:
 
     # Attach the root logger to the console appender
     Root:
-      level: info 
+      level: info
       AppenderRef:
         - ref: Console
-  
+
       # Enable debug logging for all org.galatea.starter classes/loggers     
     Logger:
       - name: org.galatea.starter
         level: debug
 
       # Can change log levels for individual loggers as below
-#      - name: org.galatea.starter.utils.Tracer
-#        level: debug
+      #      - name: org.galatea.starter.utils.Tracer
+      #        level: debug
 
       # Turn off Spring auto-configuration debug-level logging because it adds a lot of noise to test logs
       # If Spring debug logging is off this isn't necessary

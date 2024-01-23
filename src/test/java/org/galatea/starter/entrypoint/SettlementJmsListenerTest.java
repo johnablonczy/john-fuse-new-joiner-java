@@ -34,15 +34,12 @@ public class SettlementJmsListenerTest extends ASpringTest {
 
   @Autowired
   protected JmsTemplate jmsTemplate;
-
-  @MockBean
-  private SettlementService mockSettlementService;
-
   @Value("${jms.agreement-queue-json}")
   protected String jsonQueueName;
-
   @Value("${jms.agreement-queue-proto}")
   protected String protoQueueName;
+  @MockBean
+  private SettlementService mockSettlementService;
 
   /*
   The ActiveMQ broker doesn't get shutdown after each test so we have the cleanup method in the base

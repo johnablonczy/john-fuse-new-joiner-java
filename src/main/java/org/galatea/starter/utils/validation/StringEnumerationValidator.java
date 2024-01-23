@@ -13,6 +13,11 @@ public class StringEnumerationValidator implements ConstraintValidator<StringEnu
 
   private Set<String> values;
 
+  private static Set<String> getNamesSet(final Class<? extends Enum<?>> enumClass) {
+    Enum<?>[] enumConstants = enumClass.getEnumConstants();
+    return Arrays.stream(enumConstants).map(Enum::name).collect(Collectors.toSet());
+  }
+
   @Override
   public void initialize(final StringEnumeration stringEnumeration) {
     Class<? extends Enum<?>> enumClass = stringEnumeration.enumClass();
@@ -22,11 +27,6 @@ public class StringEnumerationValidator implements ConstraintValidator<StringEnu
   @Override
   public boolean isValid(final String value, final ConstraintValidatorContext context) {
     return value == null || values.contains(value);
-  }
-
-  private static Set<String> getNamesSet(final Class<? extends Enum<?>> enumClass) {
-    Enum<?>[] enumConstants = enumClass.getEnumConstants();
-    return Arrays.stream(enumConstants).map(Enum::name).collect(Collectors.toSet());
   }
 
 }

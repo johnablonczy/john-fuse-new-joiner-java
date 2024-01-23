@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import net.sf.aspect4log.Log;
 import net.sf.aspect4log.Log.Level;
+import org.galatea.starter.domain.IexHistoricalData;
 import org.galatea.starter.domain.IexLastTradedPrice;
 import org.galatea.starter.domain.IexSymbol;
 import org.galatea.starter.service.IexService;
@@ -46,6 +47,23 @@ public class IexRestController {
   public List<IexLastTradedPrice> getLastTradedPrice(
       @RequestParam(value = "symbols") final List<String> symbols) {
     return iexService.getLastTradedPriceForSymbols(symbols);
+  }
+
+  /**
+   * Get the adjusted and unadjusted data for up to 15 years, and historical minute-by-minute
+   * intraday prices for the last 30 trailing calendar days.
+   *
+   * @param symbol stock symbol to get historical data for.
+   * @param range range of time to get data for. (2y, 5y, 1y, ytd, 6m ...)
+   * @return a JSON object with data pertaining to the symbol within the specified time range.
+   */
+
+  @GetMapping(value = "${mvc.iex.getHistoricalDataPath}",
+      produces = {MediaType.APPLICATION_JSON_VALUE})
+  public List<IexHistoricalData> getHistoricalData(
+      @RequestParam(value = "symbol") final String symbol,
+      @RequestParam(value = "range") final String range) {
+    return iexService.getHistoricalDataForSymbolAndRange(symbol, range);
   }
 
 }

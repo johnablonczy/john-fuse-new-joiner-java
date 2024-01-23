@@ -58,7 +58,7 @@ public class ProtoMessageTranslationConfig {
    */
   @Bean
   public ITranslator<SettlementMission, SettlementMissionProtoMessage>
-      settlementMissionProtoTranslator() {
+          settlementMissionProtoTranslator() {
     return msg -> SettlementMissionProtoMessage.newBuilder().setId(msg.getId())
         .setDepot(msg.getDepot()).setDirection(msg.getDirection())
         .setExternalParty(msg.getExternalParty()).setInstrument(msg.getInstrument())
@@ -71,7 +71,7 @@ public class ProtoMessageTranslationConfig {
    */
   @Bean
   public ITranslator<TradeAgreementProtoMessages, List<TradeAgreement>>
-      tradeAgreementProtoMessagesTranslator(
+          tradeAgreementProtoMessagesTranslator(
       final ITranslator<TradeAgreementProtoMessage, TradeAgreement> translator) {
     return msg -> msg.getMessageList().stream().map(translator::translate)
         .collect(Collectors.toList());

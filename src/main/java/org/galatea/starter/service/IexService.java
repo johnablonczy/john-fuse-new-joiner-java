@@ -5,6 +5,7 @@ import java.util.List;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.galatea.starter.domain.IexHistoricalData;
 import org.galatea.starter.domain.IexLastTradedPrice;
 import org.galatea.starter.domain.IexSymbol;
 import org.springframework.stereotype.Service;
@@ -45,5 +46,20 @@ public class IexService {
     }
   }
 
+  /**
+   * Get the adjusted and unadjusted data for up to 15 years, and historical minute-by-minute
+   * intraday prices for the last 30 trailing calendar days.
+   *
+   * @param symbol stock symbol to get historical data for.
+   * @param range range of time to get data for. (2y, 5y, 1y, ytd, 6m ...)
+   * @return a JSON object with data pertaining to the symbol within the specified time range.
+   */
+  public List<IexHistoricalData> getHistoricalDataForSymbolAndRange(final String symbol,
+      final String range) {
+    if (symbol.isEmpty() || range.isEmpty()) {
+      return Collections.emptyList();
+    }
+    return iexClient.getHistoricalDataForSymbolAndRange(symbol, range);
+  }
 
 }

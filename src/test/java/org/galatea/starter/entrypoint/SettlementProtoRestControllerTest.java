@@ -49,17 +49,13 @@ import org.springframework.test.web.servlet.MvcResult;
 public class SettlementProtoRestControllerTest extends ASpringTest {
 
   private static final String APPLICATION_X_PROTOBUF = "application/x-protobuf";
-
+  private static final Long MISSION_ID_1 = 100L;
   @Autowired
   private ITranslator<SettlementMission, SettlementMissionProtoMessage> settlementMissionTranslator;
-
   @Autowired
   private MockMvc mvc;
-
   @MockBean
   private SettlementService mockSettlementService;
-
-  private static final Long MISSION_ID_1 = 100L;
 
   @Test
   public void testSettleAgreement() throws Exception {
@@ -78,8 +74,8 @@ public class SettlementProtoRestControllerTest extends ASpringTest {
         .willReturn(Sets.newTreeSet(singletonList(expectedId)));
 
     MvcResult result = this.mvc.perform(
-        post("/settlementEngine?requestId=1234").contentType(APPLICATION_X_PROTOBUF)
-            .accept(APPLICATION_X_PROTOBUF).content(messages.toByteArray()))
+            post("/settlementEngine?requestId=1234").contentType(APPLICATION_X_PROTOBUF)
+                .accept(APPLICATION_X_PROTOBUF).content(messages.toByteArray()))
         .andExpect(status().isOk()).andReturn();
 
     SettlementResponseProtoMessage received = SettlementResponseProtoMessage
@@ -112,8 +108,8 @@ public class SettlementProtoRestControllerTest extends ASpringTest {
     given(this.mockSettlementService.findMission(MISSION_ID_1)).willReturn(Optional.empty());
 
     this.mvc.perform(
-        get("/settlementEngine/mission/" + MISSION_ID_1 + "?requesId=1234")
-            .accept(APPLICATION_X_PROTOBUF))
+            get("/settlementEngine/mission/" + MISSION_ID_1 + "?requesId=1234")
+                .accept(APPLICATION_X_PROTOBUF))
         .andExpect(status().is4xxClientError());
   }
 }

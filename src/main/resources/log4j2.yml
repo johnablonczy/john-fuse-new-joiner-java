@@ -8,7 +8,7 @@
 Configuration:
   name: Default
 
-# Some properties so we're not tempted to hard-code anything below
+  # Some properties so we're not tempted to hard-code anything below
   Properties:
     Property:
       # Currently we are creating 3 application log files on startup, because there are three events
@@ -29,7 +29,7 @@ Configuration:
       - name: log-pattern
         value: "%d{yyyy.MM.dd HH:mm:ss.SSS} [%t] %-5level [%X{X-B3-TraceId}/%X{X-B3-SpanId}] %logger{1.} - %X{internal-request-id}%X{external-request-id}%msg%n%xThrowable{separator(|)}"
 
-# Create some appenders
+  # Create some appenders
   Appenders:
 
     # Log to console.
@@ -58,11 +58,11 @@ Configuration:
             interval: 1
             modulate: true
           # Should also limit files based on size
-          SizeBasedTriggeringPolicy: 
+          SizeBasedTriggeringPolicy:
             size: 100 MB
           # Also, roll on startup
-          OnStartupTriggeringPolicy: {}
-            
+          OnStartupTriggeringPolicy: { }
+
       # Log all warnings to a specific file
       - name: WarnRollingFileAppender
         filename: ${log-dir}/${log-file-prefix}.warnings.log
@@ -74,9 +74,9 @@ Configuration:
           TimeBasedTriggeringPolicy:
             interval: 1
             modulate: true
-          SizeBasedTriggeringPolicy: 
+          SizeBasedTriggeringPolicy:
             size: 100 MB
-          OnStartupTriggeringPolicy: {}
+          OnStartupTriggeringPolicy: { }
         # Only accept messages logged at the 'WARN' level
         ThresholdFilter:
           level: WARN
@@ -94,15 +94,15 @@ Configuration:
           TimeBasedTriggeringPolicy:
             interval: 1
             modulate: true
-          SizeBasedTriggeringPolicy: 
+          SizeBasedTriggeringPolicy:
             size: 100 MB
-          OnStartupTriggeringPolicy: {}
+          OnStartupTriggeringPolicy: { }
         # Only accept messages logged at the 'ERROR' level
         ThresholdFilter:
           level: ERROR
           onMatch: ACCEPT
           onMismatch: DENY
-          
+
       # Create an appender to send Rest request logs to their own file
       - name: RestRequestRollingFileAppender
         filename: ${log-dir}/${log-file-prefix}.rest.log
@@ -114,10 +114,10 @@ Configuration:
           TimeBasedTriggeringPolicy:
             interval: 1
             modulate: true
-          SizeBasedTriggeringPolicy: 
+          SizeBasedTriggeringPolicy:
             size: 100 MB
-          OnStartupTriggeringPolicy: {}
-        
+          OnStartupTriggeringPolicy: { }
+
     # Logging should be done asynchronously    
     # TODO: may want to investigate a bit, given this warning:
     # http://logging.apache.org/log4j/2.x/manual/appenders.html#AsyncAppender: 
@@ -128,13 +128,13 @@ Configuration:
         AppenderRef:
           - ref: RollingFileAppender
           - ref: WarnRollingFileAppender
-          - ref: ErrorRollingFileAppender        
-            
+          - ref: ErrorRollingFileAppender
+
       - name: AsyncRestRequestAppender
         bufferSize: 50000
         AppenderRef:
           - ref: RestRequestRollingFileAppender
-          
+
   Loggers:
     # Define some defaults
     Root:
