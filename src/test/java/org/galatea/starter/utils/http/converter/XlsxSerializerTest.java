@@ -23,16 +23,6 @@ import org.junit.Test;
 @Slf4j
 public class XlsxSerializerTest {
 
-  private static byte[] writeSpreadsheetToBytes(final Workbook wb) throws IOException {
-    try (ByteArrayOutputStream baos = new ByteArrayOutputStream()) {
-      wb.write(baos);
-      return baos.toByteArray();
-    } catch (IOException e) {
-      log.error("Unable to write spreadsheet to bytes", e);
-      throw e;
-    }
-  }
-
   @Test
   public void serializeToXlsx_basic() throws Exception {
     BasicClass row1 = new BasicClass("foo", "bar");
@@ -168,6 +158,16 @@ public class XlsxSerializerTest {
     byte[] actual = XlsxSerializer.serializeToXlsx(
         Collections.singletonList(row1), CustomHeadersClass.class);
     assertTrue(XlsxComparator.equals(expected, actual));
+  }
+
+  private static byte[] writeSpreadsheetToBytes(final Workbook wb) throws IOException {
+    try (ByteArrayOutputStream baos = new ByteArrayOutputStream()) {
+      wb.write(baos);
+      return baos.toByteArray();
+    } catch (IOException e) {
+      log.error("Unable to write spreadsheet to bytes", e);
+      throw e;
+    }
   }
 
   @AllArgsConstructor

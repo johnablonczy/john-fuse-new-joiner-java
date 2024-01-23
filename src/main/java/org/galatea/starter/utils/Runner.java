@@ -44,24 +44,6 @@ public class Runner {
   }
 
   /**
-   * Attaches the provided suffix to the current thread name and then invokes call.call().
-   */
-  public static <T> T setThreadAndCall(final Callable<T> call, final String suffix)
-      throws Exception {
-    if (suffix.isEmpty()) {
-      return call.call();
-    }
-
-    String oldName = Thread.currentThread().getName();
-    Thread.currentThread().setName(oldName + "-" + suffix);
-    try {
-      return call.call();
-    } finally {
-      Thread.currentThread().setName(oldName);
-    }
-  }
-
-  /**
    * Runs the operation with the non-null decorators provided.
    *
    * @return a stopwatch that was used to time the operation. The stopwatch will be stopped.
@@ -91,5 +73,23 @@ public class Runner {
         lock.unlock();
       }
     };
+  }
+
+  /**
+   * Attaches the provided suffix to the current thread name and then invokes call.call().
+   */
+  public static <T> T setThreadAndCall(final Callable<T> call, final String suffix)
+      throws Exception {
+    if (suffix.isEmpty()) {
+      return call.call();
+    }
+
+    String oldName = Thread.currentThread().getName();
+    Thread.currentThread().setName(oldName + "-" + suffix);
+    try {
+      return call.call();
+    } finally {
+      Thread.currentThread().setName(oldName);
+    }
   }
 }

@@ -31,6 +31,22 @@ public abstract class ASpringTest {
   @Autowired
   protected ApplicationContext applicationContext;
 
+  /**
+   * Pipe delimited mapper used for parameterized unit tests run by JUnitParamsRunner.class
+   */
+  public static class JsonTestFileMapper extends IdentityMapper {
+
+    public static final String DELIM = "\\|";
+
+    @Override
+    public Object[] map(Reader reader) {
+      Object[] lines = super.map(reader);
+      return Arrays.stream(lines).map(objLine -> (String) objLine)
+          .filter(line -> !line.trim().isEmpty())
+          .map(line -> line.split(DELIM)).collect(Collectors.toList()).toArray();
+    }
+  }
+
   public static String readData(final String fileName) throws IOException {
     return IOUtils.toString(ASpringTest.class.getClassLoader().getResourceAsStream(fileName));
   }
@@ -65,22 +81,6 @@ public abstract class ASpringTest {
           + " registry since we came across an exception", err);
     }
 
-  }
-
-  /**
-   * Pipe delimited mapper used for parameterized unit tests run by JUnitParamsRunner.class
-   */
-  public static class JsonTestFileMapper extends IdentityMapper {
-
-    public static final String DELIM = "\\|";
-
-    @Override
-    public Object[] map(Reader reader) {
-      Object[] lines = super.map(reader);
-      return Arrays.stream(lines).map(objLine -> (String) objLine)
-          .filter(line -> !line.trim().isEmpty())
-          .map(line -> line.split(DELIM)).collect(Collectors.toList()).toArray();
-    }
   }
 
 }

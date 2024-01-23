@@ -15,6 +15,24 @@ import org.junit.Test;
 @EqualsAndHashCode
 public class HelpersTest {
 
+  public static class SimpleObject {
+
+    private String x = "X";
+
+    void setX(String x) {
+      this.x = x;
+    }
+
+    public String getX() {
+      return x;
+    }
+
+    // Starts with "get" but is private, so it shouldn't be included in the diff
+    private long getNanoTime() {
+      return System.nanoTime();
+    }
+  }
+
   @Test
   public void testNoDiff() {
 
@@ -42,23 +60,5 @@ public class HelpersTest {
     String lhs = "hi";
     SimpleObject rhs = new SimpleObject();
     Helpers.diff(lhs, rhs);
-  }
-
-  public static class SimpleObject {
-
-    private String x = "X";
-
-    public String getX() {
-      return x;
-    }
-
-    void setX(String x) {
-      this.x = x;
-    }
-
-    // Starts with "get" but is private, so it shouldn't be included in the diff
-    private long getNanoTime() {
-      return System.nanoTime();
-    }
   }
 }
