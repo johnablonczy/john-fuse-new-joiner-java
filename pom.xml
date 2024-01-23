@@ -418,6 +418,11 @@
 				<artifactId>protobuf-maven-plugin</artifactId>
 				<version>0.6.1</version>
 				<configuration>
+					<!--
+					This package does not exist for M-series Mac, so I needed to hard code it to osx-x86_64
+					Found the fix here:
+					https://github.com/grpc/grpc-java/issues/7690
+					-->
 					<protocArtifact>
 						com.google.protobuf:protoc:3.3.0:exe:${os.detected.classifier}
 					</protocArtifact>
