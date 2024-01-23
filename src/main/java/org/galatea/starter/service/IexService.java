@@ -1,5 +1,6 @@
 package org.galatea.starter.service;
 
+import feign.FeignException;
 import java.util.Collections;
 import java.util.List;
 import lombok.NonNull;
@@ -59,7 +60,20 @@ public class IexService {
     if (symbol.isEmpty() || range.isEmpty()) {
       return Collections.emptyList();
     }
-    return iexClient.getHistoricalDataForSymbolAndRange(symbol, range);
+
+    /*
+    * Try catch to gracefully let the user know something went wrong with the request, avoiding
+    * the white label error page. This will be hit when the symbol or range is not recognized by
+    * Iex.
+    * */
+
+    try {
+      return iexClient.getHistoricalDataForSymbolAndRange(symbol, range);
+    } catch (FeignException e) {
+      return Collections.singletonList(IexHistoricalData.builder()
+          .symbol("Request error")
+          .build());
+    }
   }
 
 }

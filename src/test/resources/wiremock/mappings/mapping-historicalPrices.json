@@ -1,0 +1,114 @@
+{
+  "id": "c636b089-b538-41d3-bfcb-fe5fcc2c0066",
+  "name": "stock_chart",
+  "request": {
+    "url": "/stock/msft/chart/2w?token=sk_a94ce7dbb393419495e948c5602bf777&filter=close%2Chigh%2Clow%2Copen%2Csymbol%2Cvolume%2Cdate",
+    "method": "GET"
+  },
+  "response": {
+    "status": 200,
+    "jsonBody": [
+      {
+        "close": 375.79,
+        "high": 375.99,
+        "low": 371.19,
+        "open": 372.01,
+        "symbol": "MSFT",
+        "volume": 20829953,
+        "date": 1704758400000
+      },
+      {
+        "close": 382.77,
+        "high": 384.17,
+        "low": 376.32,
+        "open": 376.37,
+        "symbol": "MSFT",
+        "volume": 25514245,
+        "date": 1704844800000
+      },
+      {
+        "close": 384.63,
+        "high": 390.68,
+        "low": 380.38,
+        "open": 386,
+        "symbol": "MSFT",
+        "volume": 27850846,
+        "date": 1704931200000
+      },
+      {
+        "close": 388.47,
+        "high": 388.68,
+        "low": 384.65,
+        "open": 385.49,
+        "symbol": "MSFT",
+        "volume": 21661153,
+        "date": 1705017600000
+      },
+      {
+        "close": 390.27,
+        "high": 394.03,
+        "low": 387.6229,
+        "open": 393.66,
+        "symbol": "MSFT",
+        "volume": 27202268,
+        "date": 1705363200000
+      },
+      {
+        "close": 389.47,
+        "high": 390.11,
+        "low": 384.81,
+        "open": 387.98,
+        "symbol": "MSFT",
+        "volume": 22234108,
+        "date": 1705449600000
+      },
+      {
+        "close": 393.87,
+        "high": 393.99,
+        "low": 390.12,
+        "open": 391.72,
+        "symbol": "MSFT",
+        "volume": 23392068,
+        "date": 1705536000000
+      },
+      {
+        "close": 398.67,
+        "high": 398.67,
+        "low": 393.5,
+        "open": 395.76,
+        "symbol": "MSFT",
+        "volume": 29331136,
+        "date": 1705622400000
+      },
+      {
+        "close": 396.51,
+        "high": 400.62,
+        "low": 393.59,
+        "open": 400.02,
+        "symbol": "MSFT",
+        "volume": 27016902,
+        "date": 1705881600000
+      }
+    ],
+    "headers": {
+      "Server": "nginx",
+      "Date": "Thu, 08 Aug 2019 14:08:53 GMT",
+      "Content-Type": "application/json; charset=utf-8",
+      "Connection": "keep-alive",
+      "set-cookie": "ctoken=fa985701ee3e4dc8bc416e8ee8cd8df8; Domain=.iextrading.com; Path=/; Expires=Fri, 09 Aug 2019 02:08:53 GMT; Secure",
+      "Content-Security-Policy": "default-src 'self'; child-src 'none'; object-src 'none'; style-src 'self' 'unsafe-inline'; font-src data:; frame-src 'self'; connect-src 'self' https://auth.iextrading.com https://api.iextrading.com https://api.iextrading.com wss://iextrading.com wss://tops.iextrading.com wss://api.iextrading.com wss://iextrading.com https://iextrading.com/member-center; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.google-analytics.com/analytics.js;",
+      "X-Content-Security-Policy": "default-src 'self'; child-src 'none'; object-src 'none'; style-src 'self' 'unsafe-inline'; font-src data:; frame-src 'self'; connect-src 'self' https://auth.iextrading.com https://api.iextrading.com https://api.iextrading.com wss://iextrading.com wss://tops.iextrading.com wss://api.iextrading.com wss://iextrading.com https://iextrading.com/member-center; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.google-analytics.com/analytics.js;",
+      "Frame-Options": "SAMEORIGIN",
+      "X-Frame-Options": "SAMEORIGIN",
+      "X-Content-Type-Options": "nosniff",
+      "Strict-Transport-Security": "max-age=15768000",
+      "Access-Control-Allow-Origin": "*",
+      "Access-Control-Allow-Credentials": "true",
+      "Access-Control-Allow-Methods": "GET, OPTIONS",
+      "Access-Control-Allow-Headers": "Origin, X-Requested-With, Content-Type, Accept"
+    }
+  },
+  "uuid": "c636b089-b538-41d3-bfcb-fe5fcc2c0066",
+  "persistent": true,
+  "insertionIndex": 6
+}
