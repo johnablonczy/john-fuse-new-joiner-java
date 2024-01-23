@@ -54,7 +54,7 @@ public class SettlementMissionCsvConverter
       final HttpOutputMessage outputMessage) throws IOException {
     log.info("Converting SettlementMissionList to CSV for HTTP response");
     outputMessage.getBody().write(CsvSerializer.serializeToCsv(
-            settlementMissionList.getSettlementMissions(), SettlementMission.class)
+        settlementMissionList.getSettlementMissions(), SettlementMission.class)
         .getBytes(Charsets.UTF_8));
     log.info("Converted SettlementMissionList to CSV");
   }

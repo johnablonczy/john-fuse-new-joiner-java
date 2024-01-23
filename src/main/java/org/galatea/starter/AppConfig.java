@@ -44,8 +44,8 @@ public class AppConfig {
   }
 
   /**
-   * CacheManager that contains the Cache Configuration. Spring will use this cache if any cache
-   * annotations are used.
+   * CacheManager that contains the Cache Configuration. Spring will use this cache if any
+   * cache annotations are used.
    */
   @Bean
   public CacheManager cacheManager(final EhCacheManagerFactoryBean ehCacheCacheManagerFactoryBean) {
@@ -59,7 +59,7 @@ public class AppConfig {
    */
   @Bean
   public EhCacheManagerFactoryBean ehCacheCacheManagerFactoryBean(
-      @Value("${cache-config}") final String cacheConfig) {
+          @Value("${cache-config}") final String cacheConfig) {
     EhCacheManagerFactoryBean cmfb = new EhCacheManagerFactoryBean();
     cmfb.setConfigLocation(new ClassPathResource(cacheConfig));
     cmfb.setShared(true);

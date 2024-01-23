@@ -45,8 +45,7 @@ public class SettlementServiceTest extends ASpringTest {
     SettlementMission testSettlementMission
         = TestDataGenerator.defaultSettlementMissionData().build();
 
-    given(this.mockSettlementMissionRpsy.findById(id)).willReturn(
-        Optional.of(testSettlementMission));
+    given(this.mockSettlementMissionRpsy.findById(id)).willReturn(Optional.of(testSettlementMission));
 
     Optional<SettlementMission> maybeRetrieved = service.findMission(id);
     assertTrue(maybeRetrieved.isPresent());
@@ -59,8 +58,7 @@ public class SettlementServiceTest extends ASpringTest {
     SettlementMission testSettlementMission
         = TestDataGenerator.defaultSettlementMissionData().id(id).build();
 
-    given(this.mockSettlementMissionRpsy.findById(id)).willReturn(
-        Optional.of(testSettlementMission));
+    given(this.mockSettlementMissionRpsy.findById(id)).willReturn(Optional.of(testSettlementMission));
 
     Optional<SettlementMission> maybeRetrieved = service.findMission(id + 1); // not the same id!!!
     assertFalse(maybeRetrieved.isPresent());
@@ -128,8 +126,7 @@ public class SettlementServiceTest extends ASpringTest {
     SettlementService service =
         new SettlementService(this.mockSettlementMissionRpsy, this.mockAgreementTransformer);
 
-    Optional<SettlementMission> settlementMissionOptional =
-        service.updateMission(35L, testSettlementMission);
+    Optional<SettlementMission> settlementMissionOptional = service.updateMission(35L, testSettlementMission);
     assertEquals((Long) 35L, settlementMissionOptional.get().getId());
   }
 

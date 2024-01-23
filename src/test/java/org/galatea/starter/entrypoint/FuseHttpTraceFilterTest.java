@@ -58,16 +58,23 @@ import org.springframework.web.context.WebApplicationContext;
 @RunWith(JUnitParamsRunner.class)
 public class FuseHttpTraceFilterTest extends ASpringTest {
 
-  private static final Long MISSION_ID_1 = 1091L;
   @Autowired
   ITranslator<TradeAgreementMessages, List<TradeAgreement>> tradeAgreementTranslator;
+
   @Autowired
   private WebApplicationContext context;
+
   @MockBean
   private SettlementService mockSettlementService;
+
   private ObjectMapper objectMapper;
+
   private JacksonTester<TradeAgreementMessages> agreementJsonTester;
+
   private JacksonTester<List<Long>> missionIdJsonTester;
+
+  private static final Long MISSION_ID_1 = 1091L;
+
   @LocalServerPort
   private int port;
 
@@ -119,8 +126,8 @@ public class FuseHttpTraceFilterTest extends ASpringTest {
   public void testSettleAgreement_XML() throws Exception {
 
     TradeAgreementMessages messages = TradeAgreementMessages.builder().agreement(
-            TradeAgreementMessage.builder().instrument("IBM").internalParty("INT-1")
-                .externalParty("EXT-1").buySell("B").qty(100d).build())
+        TradeAgreementMessage.builder().instrument("IBM").internalParty("INT-1")
+            .externalParty("EXT-1").buySell("B").qty(100d).build())
         .build();
 
     JAXBContext context = JAXBContext.newInstance(TradeAgreementMessages.class);
