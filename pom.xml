@@ -34,6 +34,7 @@
 		</sonar.coverage.exclusions>
 		<sonar.organization>johnablonczy</sonar.organization>
 		<sonar.host.url>https://sonarcloud.io</sonar.host.url>
+		<sonar.scanner.force-deprecated-java-version>true</sonar.scanner.force-deprecated-java-version>
 		<!-- Allow us to skip Unit Tests only, if need be, with -Dskip.surefire.tests, but retain the skip all tests functionality of -DskipTests -->
 		<skip.surefire.tests>${skipTests}</skip.surefire.tests>
 	</properties>
