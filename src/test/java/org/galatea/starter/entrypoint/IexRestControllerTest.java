@@ -103,4 +103,15 @@ public class IexRestControllerTest extends ASpringTest {
         .andExpect(jsonPath("$", is(Collections.emptyList())))
         .andReturn();
   }
+
+  @Test
+  public void testHistoricalPricesBadRequest() throws Exception {
+    MvcResult result = this.mvc.perform(
+                    org.springframework.test.web.servlet.request.MockMvcRequestBuilders
+                            .get("/iex/historicalPrices?symbol=asbdfbfdsja&range=max")
+                            .accept(MediaType.APPLICATION_JSON_VALUE))
+            .andExpect(status().isOk())
+            .andExpect(jsonPath("$[0].symbol", is("Request error")))
+            .andReturn();
+  }
 }
