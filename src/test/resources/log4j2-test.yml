@@ -4,12 +4,12 @@
 # Can specify using this configuration along with log4j2.yml via: -Dlog4j.configurationFile=log4j2.yml,log4j2-test.yml
 
 Configuration:
-  name: Default  
+  name: Default
   # "status: trace" to print out logging configuration debug messages
   # status: trace
   
   Appenders:
-  
+
     Console:
       name: Console
       target: SYSTEM_OUT
@@ -20,10 +20,10 @@ Configuration:
 
     # Attach the root logger to the console appender
     Root:
-      level: info 
+      level: info
       AppenderRef:
         - ref: Console
-  
+
       # Enable debug logging for all org.galatea.starter classes/loggers     
     Logger:
       - name: org.galatea.starter
