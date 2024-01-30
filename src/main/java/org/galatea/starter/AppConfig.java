@@ -1,5 +1,6 @@
 package org.galatea.starter;
 
+import com.datastax.oss.driver.api.core.CqlSession;
 import feign.Logger;
 import lombok.extern.slf4j.Slf4j;
 import net.sf.aspect4log.aspect.LogAspect;
@@ -75,5 +76,4 @@ public class AppConfig {
   public Logger.Level logLevel() {
     return Logger.Level.BASIC;
   }
-
 }

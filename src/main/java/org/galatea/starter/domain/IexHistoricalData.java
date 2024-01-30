@@ -4,9 +4,11 @@ import java.math.BigDecimal;
 import java.util.Date;
 import lombok.Builder;
 import lombok.Data;
+import lombok.Getter;
 
 @Data
 @Builder
+@Getter
 public class IexHistoricalData {
 
   private BigDecimal close;

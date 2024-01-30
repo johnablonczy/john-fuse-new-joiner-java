@@ -59,12 +59,6 @@
 			</exclusions>
 		</dependency>
 
-		<!-- Use log4j instead of logback -->
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-log4j2</artifactId>
-		</dependency>
-
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-starter-openfeign</artifactId>
@@ -303,6 +297,19 @@
       <artifactId>feign-jackson</artifactId>
       <version>9.5.1</version>
     </dependency>
+
+		<!-- Cassandra for response storage-->
+		<dependency>
+			<groupId>org.springframework.data</groupId>
+			<artifactId>spring-data-cassandra</artifactId>
+			<version>3.4.18</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.datastax.astra</groupId>
+			<artifactId>astra-spring-boot-starter</artifactId>
+			<version>0.1.14</version>
+		</dependency>
 
 		<!-- Testing dependencies -->
 		<dependency>
