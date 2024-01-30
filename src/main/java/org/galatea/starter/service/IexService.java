@@ -3,12 +3,17 @@ package org.galatea.starter.service;
 import feign.FeignException;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.galatea.starter.domain.IexHistoricalData;
+import org.galatea.starter.domain.IexHistoricalDataList;
 import org.galatea.starter.domain.IexLastTradedPrice;
 import org.galatea.starter.domain.IexSymbol;
+import org.galatea.starter.domain.rpsy.IHistoricalDataRpsy;
+import org.galatea.starter.domain.rpsy.IPriceRpsy;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
@@ -22,6 +27,12 @@ public class IexService {
 
   @NonNull
   private IexClient iexClient;
+
+  @Autowired
+  private IHistoricalDataRpsy historicalDataRpsy;
+
+  @Autowired
+  private IPriceRpsy priceRpsy;
 
 
   /**
@@ -68,7 +79,14 @@ public class IexService {
     * */
 
     try {
-      return iexClient.getHistoricalDataForSymbolAndRange(symbol, range);
+      List<IexHistoricalData> prices = iexClient.getHistoricalDataForSymbolAndRange(symbol, range);
+      IexHistoricalDataList list = IexHistoricalDataList.builder()
+          .path(symbol)
+          .ids(prices.stream().map(IexHistoricalData::getId).collect(Collectors.toList()))
+          .build();
+      priceRpsy.saveAll(prices);
+      historicalDataRpsy.save(list);
+      return prices;
     } catch (FeignException e) {
       return Collections.singletonList(IexHistoricalData.builder()
           .symbol("Request error")

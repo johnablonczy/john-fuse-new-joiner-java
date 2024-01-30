@@ -231,6 +231,18 @@
 			<artifactId>h2</artifactId>
 		</dependency>
 
+		<!-- Cassandra -->
+		<dependency>
+			<groupId>org.springframework.data</groupId>
+			<artifactId>spring-data-cassandra</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>com.codahale.metrics</groupId>
+			<artifactId>metrics-core</artifactId>
+			<version>3.0.2</version>
+		</dependency>
+
 		<!-- Lombok for tostring, hashcode, etc -->
 		<!-- See: https://projectlombok.org/ -->
 		<!-- Eclipse plugin to recognizes the Lombok annotations: http://jnb.ociweb.com/jnb/jnbJan2010.html#installation -->
@@ -425,11 +437,11 @@
 					https://github.com/grpc/grpc-java/issues/7690
 					-->
 					<protocArtifact>
-						com.google.protobuf:protoc:3.3.0:exe:${os.detected.classifier}
+						com.google.protobuf:protoc:3.3.0:exe:osx-x86_64
 					</protocArtifact>
 					<pluginId>grpc-java</pluginId>
 					<pluginArtifact>
-						io.grpc:protoc-gen-grpc-java:1.4.0:exe:${os.detected.classifier}
+						io.grpc:protoc-gen-grpc-java:1.4.0:exe:osx-x86_64
 					</pluginArtifact>
 				</configuration>
         <executions>
