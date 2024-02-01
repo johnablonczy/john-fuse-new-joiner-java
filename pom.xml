@@ -437,11 +437,11 @@
 					https://github.com/grpc/grpc-java/issues/7690
 					-->
 					<protocArtifact>
-						com.google.protobuf:protoc:3.3.0:exe:osx-x86_64
+						com.google.protobuf:protoc:3.3.0:exe:${os.detected.classifier}
 					</protocArtifact>
 					<pluginId>grpc-java</pluginId>
 					<pluginArtifact>
-						io.grpc:protoc-gen-grpc-java:1.4.0:exe:osx-x86_64
+						io.grpc:protoc-gen-grpc-java:1.4.0:exe:${os.detected.classifier}
 					</pluginArtifact>
 				</configuration>
         <executions>

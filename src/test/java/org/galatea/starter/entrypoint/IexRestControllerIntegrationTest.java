@@ -1,36 +1,28 @@
 package org.galatea.starter.entrypoint;
 
-import static org.junit.Assert.assertThat;
-
 import feign.Feign;
 import feign.Headers;
 import feign.Param;
 import feign.RequestLine;
 import feign.jackson.JacksonDecoder;
 import feign.jackson.JacksonEncoder;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.galatea.starter.ASpringTest;
 import org.galatea.starter.domain.IexHistoricalData;
+import org.galatea.starter.domain.IexHistoricalDataList;
 import org.galatea.starter.domain.rpsy.IHistoricalDataRpsy;
 import org.galatea.starter.domain.rpsy.IPriceRpsy;
-import org.galatea.starter.entrypoint.HalRestControllerIntegrationTest.FuseServer;
-import org.galatea.starter.entrypoint.messagecontracts.ProtobufMessages.SettlementMissionProtoMessage;
-import org.galatea.starter.entrypoint.messagecontracts.ProtobufMessages.SettlementResponseProtoMessage;
-import org.galatea.starter.entrypoint.messagecontracts.ProtobufMessages.TradeAgreementProtoMessages;
-import org.galatea.starter.entrypoint.messagecontracts.SettlementMissionList;
-import org.galatea.starter.entrypoint.messagecontracts.SettlementMissionMessage;
-import org.galatea.starter.entrypoint.messagecontracts.SettlementResponseMessage;
-import org.galatea.starter.entrypoint.messagecontracts.TradeAgreementMessages;
+import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.web.bind.annotation.RequestParam;
 
 
 @RequiredArgsConstructor
@@ -47,6 +39,12 @@ public class IexRestControllerIntegrationTest extends ASpringTest {
 
   @Autowired
   private IHistoricalDataRpsy historicalDataRpsy;
+
+  @Before
+  public void clearDB() {
+    priceRpsy.deleteAll();
+    historicalDataRpsy.deleteAll();
+  }
   @Test
   public void testHistoricalPricesSave() {
     String fuseHostName = System.getProperty("fuse.sandbox.url");
@@ -61,15 +59,15 @@ public class IexRestControllerIntegrationTest extends ASpringTest {
 
     log.info("Response received from IexRestController: " + response.toString());
 
-    Optional<IexHistoricalData> priceFromDB = priceRpsy.findById(0L);
+    Optional<IexHistoricalDataList> historicalDataFromDB =
+        historicalDataRpsy.findById("aapl" + "ytd");
 
-    if(priceFromDB.isPresent()) {
-      log.info("Found record in DB IexHistoricalData: {}", priceFromDB.get());
-    } else {
-      log.info("No record found in DB");
-    }
+    List<IexHistoricalData> pricesFromDB = historicalDataFromDB.map(
+        iexHistoricalDataList -> (List<IexHistoricalData>) priceRpsy.findAllById(
+            iexHistoricalDataList.getIds())).orElseGet(ArrayList::new);
 
     assert(response.size() > 1);
+    assert (pricesFromDB.containsAll(response));
   }
 
   interface FuseServer {

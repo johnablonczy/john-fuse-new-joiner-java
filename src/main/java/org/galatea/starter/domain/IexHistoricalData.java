@@ -3,8 +3,6 @@ package org.galatea.starter.domain;
 import java.math.BigDecimal;
 import java.util.Date;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -24,11 +22,10 @@ import org.springframework.data.cassandra.core.mapping.Table;
 @Table("IEX_HISTORICAL_DATA")
 public class IexHistoricalData {
 
+  @Column
   @Id
   @PrimaryKey
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  @Column
-  private long id;
+  private String id;
   @Column
   private BigDecimal close;
   @Column

@@ -73,6 +73,17 @@ public class IexService {
       return Collections.emptyList();
     }
 
+    if (historicalDataRpsy.existsById(symbol + range)) {
+      log.info("Record found in DB: Safe to avoid API call");
+      return historicalDataRpsy.findById(symbol + range)
+          .map(iexHistoricalDataList ->
+              (List<IexHistoricalData>) priceRpsy.findAllById(
+                  iexHistoricalDataList.getIds()))
+          .orElseGet(ArrayList::new);
+    } else {
+      log.info("No record found in DB for id={}", symbol + range);
+    }
+
     /*
     * Try catch to gracefully let the user know something went wrong with the request, avoiding
     * the white label error page. This will be hit when the symbol or range is not recognized by
@@ -80,15 +91,15 @@ public class IexService {
     * */
 
     try {
-      List<IexHistoricalData> prices = new ArrayList<>();
-      for(int i = 0; i < 10; i++) {
-        prices.add(IexHistoricalData.builder().symbol("aapl").build());
-      }
+      List<IexHistoricalData> prices = iexClient.getHistoricalDataForSymbolAndRange(symbol, range);
+      //Set price ID to concatenation of symbol and day
+      prices.forEach(price -> price.setId(price.getSymbol() + price.getDate().toString()));
+      priceRpsy.saveAll(prices);
+      //Link each call path to a list of saved prices
       IexHistoricalDataList list = IexHistoricalDataList.builder()
-          .path(symbol)
+          .path(symbol + range)
           .ids(prices.stream().map(IexHistoricalData::getId).collect(Collectors.toList()))
           .build();
-      priceRpsy.saveAll(prices);
       historicalDataRpsy.save(list);
       return prices;
     } catch (FeignException e) {

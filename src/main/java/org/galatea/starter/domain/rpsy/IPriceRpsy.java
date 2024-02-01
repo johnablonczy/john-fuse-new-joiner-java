@@ -5,5 +5,5 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface IPriceRpsy extends CrudRepository<IexHistoricalData, Long> {
+public interface IPriceRpsy extends CrudRepository<IexHistoricalData, String> {
 }
