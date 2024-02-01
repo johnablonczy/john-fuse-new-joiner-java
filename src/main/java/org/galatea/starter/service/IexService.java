@@ -1,14 +1,20 @@
 package org.galatea.starter.service;
 
 import feign.FeignException;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.galatea.starter.domain.IexHistoricalData;
+import org.galatea.starter.domain.IexHistoricalDataList;
 import org.galatea.starter.domain.IexLastTradedPrice;
 import org.galatea.starter.domain.IexSymbol;
+import org.galatea.starter.domain.rpsy.IHistoricalDataRpsy;
+import org.galatea.starter.domain.rpsy.IPriceRpsy;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
@@ -22,6 +28,12 @@ public class IexService {
 
   @NonNull
   private IexClient iexClient;
+
+  @Autowired
+  private IHistoricalDataRpsy historicalDataRpsy;
+
+  @Autowired
+  private IPriceRpsy priceRpsy;
 
 
   /**
@@ -61,6 +73,17 @@ public class IexService {
       return Collections.emptyList();
     }
 
+    if (historicalDataRpsy.existsById(symbol + range)) {
+      log.info("Record found in DB: Safe to avoid API call");
+      return historicalDataRpsy.findById(symbol + range)
+          .map(iexHistoricalDataList ->
+              (List<IexHistoricalData>) priceRpsy.findAllById(
+                  iexHistoricalDataList.getIds()))
+          .orElseGet(ArrayList::new);
+    } else {
+      log.info("No record found in DB for id={}", symbol + range);
+    }
+
     /*
     * Try catch to gracefully let the user know something went wrong with the request, avoiding
     * the white label error page. This will be hit when the symbol or range is not recognized by
@@ -68,7 +91,17 @@ public class IexService {
     * */
 
     try {
-      return iexClient.getHistoricalDataForSymbolAndRange(symbol, range);
+      List<IexHistoricalData> prices = iexClient.getHistoricalDataForSymbolAndRange(symbol, range);
+      //Set price ID to concatenation of symbol and day
+      prices.forEach(price -> price.setId(price.getSymbol() + price.getDate().toString()));
+      priceRpsy.saveAll(prices);
+      //Link each call path to a list of saved prices
+      IexHistoricalDataList list = IexHistoricalDataList.builder()
+          .path(symbol + range)
+          .ids(prices.stream().map(IexHistoricalData::getId).collect(Collectors.toList()))
+          .build();
+      historicalDataRpsy.save(list);
+      return prices;
     } catch (FeignException e) {
       return Collections.singletonList(IexHistoricalData.builder()
           .symbol("Request error")

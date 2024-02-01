@@ -231,6 +231,18 @@
 			<artifactId>h2</artifactId>
 		</dependency>
 
+		<!-- Cassandra -->
+		<dependency>
+			<groupId>org.springframework.data</groupId>
+			<artifactId>spring-data-cassandra</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>com.codahale.metrics</groupId>
+			<artifactId>metrics-core</artifactId>
+			<version>3.0.2</version>
+		</dependency>
+
 		<!-- Lombok for tostring, hashcode, etc -->
 		<!-- See: https://projectlombok.org/ -->
 		<!-- Eclipse plugin to recognizes the Lombok annotations: http://jnb.ociweb.com/jnb/jnbJan2010.html#installation -->

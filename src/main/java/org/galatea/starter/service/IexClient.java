@@ -22,7 +22,7 @@ public interface IexClient {
    *
    * @return a list of all of the stock symbols supported by IEX.
    */
-  @GetMapping("/ref-data/symbols?token=sk_a94ce7dbb393419495e948c5602bf777")
+  @GetMapping("/ref-data/symbols?token=sk_f2bf860a7f8941ec82e49a5db629ade8")
   List<IexSymbol> getAllSymbols();
 
   /**
@@ -32,7 +32,7 @@ public interface IexClient {
    * @param symbols stock symbols to get last traded price for.
    * @return a list of the last traded price for each of the symbols passed in.
    */
-  @GetMapping("/tops/last?token=sk_a94ce7dbb393419495e948c5602bf777")
+  @GetMapping("/tops/last?token=sk_f2bf860a7f8941ec82e49a5db629ade8")
   List<IexLastTradedPrice> getLastTradedPriceForSymbols(@RequestParam("symbols") String[] symbols);
 
   /**
@@ -45,7 +45,7 @@ public interface IexClient {
    */
 
   @GetMapping(
-      "/stock/{symbol}/chart/{range}?token=sk_a94ce7dbb393419495e948c5602bf777"
+      "/stock/{symbol}/chart/{range}?token=sk_f2bf860a7f8941ec82e49a5db629ade8"
           + "&filter=close,high,low,open,symbol,volume,date")
   List<IexHistoricalData> getHistoricalDataForSymbolAndRange(@PathVariable("symbol") String symbol,
       @PathVariable("range") String range);
