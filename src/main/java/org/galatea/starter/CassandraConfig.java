@@ -22,29 +22,4 @@ public class CassandraConfig extends AbstractCassandraConfiguration {
   protected String getKeyspaceName() {
     return "spring_cassandra";
   }
-
-  /**
-   * testing.
-   * @return testing
-   */
-  @NonNull
-  @Bean
-  public CassandraClusterFactoryBean cluster() {
-    CassandraClusterFactoryBean cluster =
-        new CassandraClusterFactoryBean();
-    cluster.setContactPoints("0.0.0.0");
-    cluster.setPort(9042);
-    return cluster;
-  }
-
-  /**
-   * testing.
-   * @return testing
-   */
-  @NonNull
-  @Bean
-  public CassandraMappingContext cassandraMapping()
-      throws ClassNotFoundException {
-    return new BasicCassandraMappingContext();
-  }
 }
