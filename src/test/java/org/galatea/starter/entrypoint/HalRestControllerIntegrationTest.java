@@ -24,7 +24,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 @Ignore
 public class HalRestControllerIntegrationTest extends ASpringTest {
 
-  @Value("${fuse-host.url}")
+  @Value("http://localhost:8080")
   private String FuseHostName;
 
   @Test

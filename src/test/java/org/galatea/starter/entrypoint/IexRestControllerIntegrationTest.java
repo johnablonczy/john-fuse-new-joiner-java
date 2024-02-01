@@ -9,6 +9,7 @@ import feign.RequestLine;
 import feign.jackson.JacksonDecoder;
 import feign.jackson.JacksonEncoder;
 import java.util.List;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.galatea.starter.ASpringTest;
@@ -38,7 +39,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 @SpringBootTest
 @Ignore
 public class IexRestControllerIntegrationTest extends ASpringTest {
-  @Value("${fuse-host.url}")
+  @Value("http://localhost:8080")
   private String FuseHostName;
 
   @Autowired
@@ -60,6 +61,14 @@ public class IexRestControllerIntegrationTest extends ASpringTest {
 
     log.info("Response received from IexRestController: " + response.toString());
 
+    Optional<IexHistoricalData> priceFromDB = priceRpsy.findById(0L);
+
+    if(priceFromDB.isPresent()) {
+      log.info("Found record in DB IexHistoricalData: {}", priceFromDB.get());
+    } else {
+      log.info("No record found in DB");
+    }
+
     assert(response.size() > 1);
   }
 
@@ -67,8 +76,8 @@ public class IexRestControllerIntegrationTest extends ASpringTest {
 
     @RequestLine("GET /iex/historicalPrices?symbol={symbol}&range={range}")
     @Headers("Content-Type: application/json")
-    List<IexHistoricalData> getHistoricalData(@RequestParam("symbol") String Symbol,
-        @RequestParam("range") String range);
+    List<IexHistoricalData> getHistoricalData(@Param("symbol") String Symbol,
+        @Param("range") String range);
   }
 
 

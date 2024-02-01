@@ -21,7 +21,7 @@ import org.springframework.data.cassandra.core.mapping.Table;
 @NoArgsConstructor
 @Getter
 @Entity
-@Table("iex_historical_data")
+@Table("IEX_HISTORICAL_DATA")
 public class IexHistoricalData {
 
   @Id

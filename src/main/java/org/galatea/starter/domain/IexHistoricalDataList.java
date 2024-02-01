@@ -19,7 +19,7 @@ import org.springframework.data.cassandra.core.mapping.Table;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@Table("iex_histocial_data_list")
+@Table("IEX_HISTORICAL_DATA_LIST")
 public class IexHistoricalDataList {
 
   @Id

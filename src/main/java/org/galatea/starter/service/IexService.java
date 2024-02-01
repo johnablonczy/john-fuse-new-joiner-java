@@ -1,6 +1,7 @@
 package org.galatea.starter.service;
 
 import feign.FeignException;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -79,7 +80,10 @@ public class IexService {
     * */
 
     try {
-      List<IexHistoricalData> prices = iexClient.getHistoricalDataForSymbolAndRange(symbol, range);
+      List<IexHistoricalData> prices = new ArrayList<>();
+      for(int i = 0; i < 10; i++) {
+        prices.add(IexHistoricalData.builder().symbol("aapl").build());
+      }
       IexHistoricalDataList list = IexHistoricalDataList.builder()
           .path(symbol)
           .ids(prices.stream().map(IexHistoricalData::getId).collect(Collectors.toList()))
